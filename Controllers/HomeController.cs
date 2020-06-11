@@ -75,27 +75,24 @@ namespace mp_ecommerce_netframework.Controllers
             //
             preference.BackUrls = new BackUrls()
             {
-                Success = "",
-                Pending = "",
-                Failure = ""
+                Success = Request.Url.GetLeftPart(UriPartial.Authority) + "/Home/Success",
+                Pending = Request.Url.GetLeftPart(UriPartial.Authority) + "/Home/Pending",
+                Failure = Request.Url.GetLeftPart(UriPartial.Authority) + "/Home/Failure"
             };
 
             //- Enviar la URL donde se van a recibir las notificaciones de pago.
-            preference.NotificationUrl = "";
+            //preference.NotificationUrl = Request.Url.GetLeftPart(UriPartial.Authority) + "/Home/Notification";
 
 
             //- Limitar la cantidad de cuotas según lo solicitado.
             //-No ofrecer los medios de pago según lo solicitados.
             
             PaymentMethods paymentmethods = new PaymentMethods();
-            paymentmethods.Installments = 6;
-
             List<MercadoPago.DataStructures.Preference.PaymentMethod> excludedPaymentMethod = new List<MercadoPago.DataStructures.Preference.PaymentMethod>();
             excludedPaymentMethod.Add(new MercadoPago.DataStructures.Preference.PaymentMethod()
             {
                 Id = "amex"
             });
-
             paymentmethods.ExcludedPaymentMethods = excludedPaymentMethod;
 
             List<PaymentType> excludedPaymentType = new List<PaymentType>();
@@ -103,8 +100,10 @@ namespace mp_ecommerce_netframework.Controllers
             {
                 Id = "atm"
             });
-
             paymentmethods.ExcludedPaymentTypes = excludedPaymentType;
+            paymentmethods.Installments = 6;
+
+            preference.PaymentMethods = paymentmethods;
 
             preference.AutoReturn = MercadoPago.Common.AutoReturnType.approved;
             
@@ -142,6 +141,10 @@ namespace mp_ecommerce_netframework.Controllers
             ViewBag.Message = "Your Payment is pending";
 
             return View();
+        }
+        public ActionResult Notification()
+        {
+            throw new NotImplementedException();
         }
     }
 }
