@@ -142,9 +142,11 @@ namespace mp_ecommerce_netframework.Controllers
 
             return View();
         }
+        [HttpPost]
         public HttpStatusCodeResult Notification(object data)
         {
             var a = Request;
+            
             return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
         }
     }
