@@ -115,9 +115,21 @@ namespace mp_ecommerce_netframework.Controllers
         }
         public ActionResult Success()
         {
+            QueryData callback = new QueryData()
+            {
+                collection_id = Request.Params["collection_id"],
+                collection_status = Request.Params["collection_status"],
+                external_reference = Request.Params["external_reference"],
+                merchant_account_id = Request.Params["merchant_account_id"],
+                payment_type = Request.Params["payment_type"],
+                preference_id = Request.Params["preference_id"],
+                processing_mode = Request.Params["processing_mode"],
+                site_id = Request.Params["site_id"]
+            };
+            
             ViewBag.Message = "Your contact page.";
 
-            return View();
+            return View(callback);
         }
         public ActionResult Failure()
         {
