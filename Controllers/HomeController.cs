@@ -81,12 +81,12 @@ namespace mp_ecommerce_netframework.Controllers
             };
 
             //- Enviar la URL donde se van a recibir las notificaciones de pago.
-            //preference.NotificationUrl = Request.Url.GetLeftPart(UriPartial.Authority) + "/Home/Notification";
-
+            preference.NotificationUrl = Request.Url.GetLeftPart(UriPartial.Authority) + "/Home/Notification";
+            //preference.NotificationUrl = "http://7d5c8207e83a.ngrok.io/Home/Notification";
 
             //- Limitar la cantidad de cuotas según lo solicitado.
             //-No ofrecer los medios de pago según lo solicitados.
-            
+
             PaymentMethods paymentmethods = new PaymentMethods();
             List<MercadoPago.DataStructures.Preference.PaymentMethod> excludedPaymentMethod = new List<MercadoPago.DataStructures.Preference.PaymentMethod>();
             excludedPaymentMethod.Add(new MercadoPago.DataStructures.Preference.PaymentMethod()
@@ -142,9 +142,10 @@ namespace mp_ecommerce_netframework.Controllers
 
             return View();
         }
-        public ActionResult Notification()
+        public HttpStatusCodeResult Notification(object data)
         {
-            throw new NotImplementedException();
+            var a = Request;
+            return new HttpStatusCodeResult(System.Net.HttpStatusCode.OK);
         }
     }
 }
